@@ -215,7 +215,7 @@ def insert_recipe():
         else:
             calories = "Not specified"
 
-        mongo.db.Recipes.insert({
+        mongo.db.Recipes.insert_one({
                 'recipe_name':request.form['recipe_name'].capitalize(),
                 'instructions':string_to_array(request.form['instructions']),
                 'serves':request.form['serves'],
