@@ -299,7 +299,7 @@ def update_recipe(recipe_id):
             else:
                 calories = "Not specified"
 
-            recipes.update({"_id":ObjectId(recipe_id)},{ "$set":
+            recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set":
                 {
                     'recipe_name':request.form['recipe_name'].capitalize(),
                     'instructions':string_to_array(request.form['instructions']),
