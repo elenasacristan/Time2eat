@@ -95,7 +95,7 @@ def get_recipes():
     return render_template('get_recipes.html',
                             title="View recipes", 
                             username=session['username'], 
-                            recipes = recipes, 
+                            recipes = recipes_list, 
                             categories = mongo.db.Categories.find(), 
                             cuisines=mongo.db.Cuisines.find(), 
                             difficulty=mongo.db.Difficulty.find(), 
