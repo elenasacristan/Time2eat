@@ -97,7 +97,7 @@ def get_recipes():
                             cuisines=mongo.db.Cuisines.find(), 
                             difficulty=mongo.db.Difficulty.find(), 
                             allergens=mongo.db.Allergens.find(), 
-                            recipes_count=recipes.count())
+                            recipes_count=len(list(recipes)))
   
 
 #search functionality in the home page
@@ -121,7 +121,7 @@ def search():
                             cuisines=mongo.db.Cuisines.find(), 
                             difficulty=mongo.db.Difficulty.find(), 
                             allergens=mongo.db.Allergens.find(), 
-                            recipes_count=recipes.count()) 
+                            recipes_count=len(list(recipes))) 
          
 
 '''
