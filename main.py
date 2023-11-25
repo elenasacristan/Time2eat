@@ -294,15 +294,14 @@ def update_recipe(recipe_id):
         recipe_image = request.files['recipe_image']
         image_data = recipe_image.read()
 	    
-            mongo.save_file(recipe_image.filename, recipe_image)
+        mongo.save_file(recipe_image.filename, recipe_image)
             
-            if request.form['calories']:
-                calories = request.form['calories']
-            else:
-                calories = "Not specified"
+        if request.form['calories']:
+            calories = request.form['calories']
+        else:
+            calories = "Not specified"
 
-            recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set":
-                {
+        recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set": {
                     'recipe_name':request.form['recipe_name'].capitalize(),
                     'instructions':string_to_array(request.form['instructions']),
                     'serves':request.form['serves'],
@@ -321,7 +320,7 @@ def update_recipe(recipe_id):
         else:
             calories = "Not specified"
 	
-	recipes.update_one({"_id": ObjectId(recipe_id)}, {
+        recipes.update_one({"_id": ObjectId(recipe_id)}, {
             "$set": {
                 'recipe_name': request.form['recipe_name'].capitalize(),
                 'instructions': string_to_array(request.form['instructions']),
