@@ -289,7 +289,7 @@ https://www.youtube.com/watch?v=DsgAuceHha4
 @app.route('/update_recipe/<recipe_id>' , methods=['GET', 'POST'])
 def update_recipe(recipe_id):
     recipes = mongo.db.Recipes
-    recipe = mongo.db.Recipes.find({"_id":ObjectId(recipe_id)})
+    recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
     if 'recipe_image' in request.files:
             recipe_image = request.files['recipe_image']
             mongo.save_file(recipe_image.filename, recipe_image)
