@@ -291,8 +291,8 @@ def update_recipe(recipe_id):
     recipes = mongo.db.Recipes
     recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
     if 'recipe_image' in request.files:
-            recipe_image = request.files['recipe_image']
-	    image_data = recipe_image.read()
+        recipe_image = request.files['recipe_image']
+        image_data = recipe_image.read()
 	    
             mongo.save_file(recipe_image.filename, recipe_image)
             
