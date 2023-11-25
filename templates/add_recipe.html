@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- In this page I have used the Materialize grid, Materialize form, Materialize inputs and Materialize modal -->
+
+<!-- "multipart/form-data" is needed in order to upload files -->
+<form action="{{url_for('insert_recipe')}}" method="POST" class="container" enctype="multipart/form-data">
+
+    <!-- recipe name -->
+    <div class="row">
+        <div class="input-field col s12 m6">
+            <h5><strong>Recipe name:</strong></h5>
+            <input placeholder="Recipe name" id="recipe_name" name="recipe_name" type="text" class="validate" required="">
+        </div>
+    </div>
+
+    <div class="row img-details">
+        <!-- recipe image -->
+        <div class="col m12 l6">
+            <!-- Modal Trigger -->
+            <div class="row">
+                <a class="modal-trigger" href="#modal1">Upload image</a>
+            </div>
+            <div class="row img-wrapper">
+                <a class="modal-trigger" href="#modal1">
+                    <img src="{{url_for('static', filename='img/default.jpg')}}" alt="default_recipe_image">
+                </a>
+            </div>
+
+            <!-- Modal Structure from Materialize-->
+            <div id="modal1" class="modal">
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" name="recipe_image" onchange="previewFile()" accept="image/gif, image/jpeg, image/png">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" placeholder="Upload image">
+                    </div>
+                    <div class="right-align">
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green">Done</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- recipe details -->
+        <div class="col m12 l6">
+            <div class="row">
+                <div class="col offset-s1 s5 offset-m1 m4 offset-m1 l6">
+                    <div class="row details-item">
+                        <div class="col s3 m6 right-align">
+                            <i class="fa fa-clock-o"></i>
+                        </div>
+                        <div class="col s9 m6 input-field">
+                            <h6><strong>Cooking time <br><span class="units">(min)</span>:</strong></h6>
+                            <input placeholder="Cooking time" id="cooking_time" name="cooking_time" type="number" class="validate" min="1" required="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col offset-s1 s5 offset-m1 m4 offset-m1 l6">
+                    <div class="row details-item">
+                        <div class="col s3 m6 right-align">
+                            <i class="fa fa-heart"></i>
+                        </div>
+                        <div class="col s9 m6 input-field">
+                            <h6><strong>Calories <br><span class="units">(kcal/serving)</span>:</strong></h6>
+                            <input placeholder="Calories" id="calories" name="calories" type="text" class="validate">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col offset-s1 s5 offset-m1 m4 offset-m1 l6">
+                    <div class="row details-item">
+                        <div class="col s3 m6 right-align">
+                            <i class="fa fa-puzzle-piece"></i>
+                        </div>
+                        <div class="col s9 m6 input-field">
+                            <h6><strong>Difficulty:</strong></h6>
+                            <select id="difficulty" name="difficulty" class="validate" required="required">
+                                <option value="" disabled selected>Select one</option>
+                                {% for level in difficulty%}
+                                    <option value="{{level.difficulty}}">{{level.difficulty}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col offset-s1 s5 offset-m1 m4 offset-m1 l6">
+                    <div class="row details-item">
+                        <div class="col s3 m6 right-align">
+                            <i class="fa fa-cutlery"></i>
+                        </div>
+                        <div class="col s9 m6 input-field">
+                            <h6><strong>Category:</strong></h6>
+                            <select id="category" name="category" class="validate" required="required">
+                                <option value="" disabled selected>Select one</option>
+                                {% for category in categories%}
+                                    <option value="{{category.category}}">{{category.category}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col offset-s1 s5 offset-m1 m4 offset-m1 l6">
+                    <div class="row details-item">
+                        <div class="col s3 m6 right-align">
+                            <i class="fa fa-globe"></i>
+                        </div>
+                        <div class="col s9 m6 input-field">
+                            <h6><strong>Cuisine:</strong></h6>
+                            <select id="cuisine" name="cuisine" class="validate" required="required">
+                                <option value="" selected>Select one</option>
+                                {% for cuisine in cuisines %}
+                                    <option value="{{cuisine.cuisine}}">{{cuisine.cuisine}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col offset-s1 s5 offset-m1 m4 offset-m1 l6">
+                    <div class="row details-item">
+                        <div class="col s3 m6 right-align">
+                            <i class="fa fa-users"></i>
+                        </div>
+                        <div class="col s9 m6 input-field">
+                            <h6><strong>Serves:</strong></h6>
+                            <input placeholder="Serves" id="serves" name="serves" type="number" class="validate" min="1" required="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row ingredients-instructions">
+        <!-- instructions -->
+        <div class="row">
+            <div class="col s12">
+                <h5>Cooking instructions:</h5>
+                <p>* Enter each step on a new line</p>
+                <textarea id="instructions" name="instructions" class="materialize-textarea validate" required=""></textarea>
+            </div>
+        </div>
+
+        <!-- ingredients -->
+        <div class="row">
+            <div class="col s12">
+                <h5>Ingredients:</h5>
+                <p>* Enter each ingredient on a new line</p>
+                <textarea id="ingredients" name="ingredients" class="materialize-textarea validate" required=""></textarea>
+            </div>
+        </div>
+
+        <!-- allergens -->
+        <div class="row">
+            <div class=" col s12">
+                <h5>Allergens:</h5>
+                <div class="input-field">
+                    <select id="allergens" name="allergens" class="validate" multiple>
+                        <option class="na" value="" selected disabled>Select the allergens</option>
+                        {% for allergen in allergens %}
+                            <option class="aller" value="{{allergen.allergen}}">{{allergen.allergen}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12 right-align">
+            <button class="btn waves-effect waves-light blue" type="submit" name="action">
+               Add recipe
+            </button>
+        </div>
+    </div>
+
+</form>
+
+{% endblock %}
