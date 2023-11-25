@@ -347,7 +347,7 @@ def manage_categories():
     category_object_sorted = sorted(category_object, key=lambda x: x['count_recipes_category'], reverse=True)
 
     for cuisine in cuisines:
-	    count_recipes_cuisine = mongo.db.Recipes.find({'cuisine':cuisine['cuisine']}).count()
+	    count_recipes_cuisine = len(list(mongo.db.Recipes.find({'cuisine':cuisine['cuisine']})))
 	    cuisine_object.append({"cuisine_id" : cuisine['_id'], 
                                 "cuisine" : cuisine['cuisine'], 
                                 "count_recipes_cuisine" : count_recipes_cuisine} )
