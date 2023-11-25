@@ -338,7 +338,7 @@ def manage_categories():
     cuisine_object=[]
 
     for category in categories:
-	    count_recipes_category = mongo.db.Recipes.find({'category':category['category']}).count()
+	    count_recipes_category = len(list(mongo.db.Recipes.find({'category':category['category']})))
 	    category_object.append({"category_id" : category['_id'] ,
                                 "category" : category['category'], 
                                 "count_recipes_category" : count_recipes_category})   
