@@ -166,7 +166,7 @@ def filter_recipes():
                                     query_cuisine,
                                     query_allergens, 
                                     query_categories]}).sort([("upvotes",DESCENDING), ("views",DESCENDING)])
-    recipes_count = recipes.count()
+    recipes_count = len(list(recipes))
 
     return render_template('get_recipes.html', 
                             title="View recipes", 
