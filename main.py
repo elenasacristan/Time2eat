@@ -361,7 +361,7 @@ def img_uploads(filename):
 # function to remove a recipe (only the author can remove a recipe)
 @app.route('/delete_recipe/<recipe_id>')
 def delete_recipe(recipe_id):
-    mongo.db.Recipes.remove({"_id":ObjectId(recipe_id)})
+    mongo.db.Recipes.delete_one({"_id":ObjectId(recipe_id)})
     return redirect(url_for('get_recipes'))
 
 
@@ -434,13 +434,13 @@ def insert_cuisine():
 
 @app.route('/delete_category/<category_id>')
 def delete_category(category_id):
-    mongo.db.Categories.remove({"_id":ObjectId(category_id)})
+    mongo.db.Categories.delete_one({"_id":ObjectId(category_id)})
     return redirect(url_for('manage_categories'))
 
 
 @app.route('/delete_cuisine/<cuisine_id>')
 def delete_cuisine(cuisine_id):
-    mongo.db.Cuisines.remove({"_id":ObjectId(cuisine_id)})
+    mongo.db.Cuisines.delete_one({"_id":ObjectId(cuisine_id)})
     return redirect(url_for('manage_categories'))
    
 '''
