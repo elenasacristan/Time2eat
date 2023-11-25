@@ -89,9 +89,9 @@ be on the top one of the carousel and the it will be in descending order if you 
 @app.route('/get_recipes')
 def get_recipes():
     recipes = mongo.db.Recipes.find().sort([("upvotes",DESCENDING), ("views",DESCENDING)])
-    for recipe in recipes:
-        print(recipe)
-    print('recipes_count',len(list(recipes)))
+    # Convert the cursor to a list once
+    recipes_list = list(recipes)
+
     return render_template('get_recipes.html',
                             title="View recipes", 
                             username=session['username'], 
@@ -100,7 +100,7 @@ def get_recipes():
                             cuisines=mongo.db.Cuisines.find(), 
                             difficulty=mongo.db.Difficulty.find(), 
                             allergens=mongo.db.Allergens.find(), 
-                            recipes_count=len(list(recipes)))
+                            recipes_count=len(recipes_list))
   
 
 #search functionality in the home page
