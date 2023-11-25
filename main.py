@@ -314,7 +314,7 @@ def update_recipe(recipe_id):
                 }})
 
             if recipe_image.filename != "":   
-                recipes.update({"_id":ObjectId(recipe_id)},{ "$set":{'recipe_image':recipe_image.filename,}})       
+                recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set":{'recipe_image':recipe_image.filename,}})       
     
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
