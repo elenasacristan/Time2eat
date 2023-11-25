@@ -91,7 +91,7 @@ def get_recipes():
     recipes = mongo.db.Recipes.find().sort([("upvotes",DESCENDING), ("views",DESCENDING)])
     for recipe in recipes:
         print(recipe)
-
+    print('recipes_count',len(list(recipes)))
     return render_template('get_recipes.html',
                             title="View recipes", 
                             username=session['username'], 
