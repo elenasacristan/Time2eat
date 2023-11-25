@@ -157,3 +157,23 @@ pip-selfcheck.json
 
 
 # End of https://www.toptal.com/developers/gitignore/api/python
+
+notes.txt
+.venv
+__pycache__
+.vscode
+dudas.txt
+env.py
+app_backup.py
+recipes_back_up_040719.json
+app.py.e66804169044aa8432b452007ef61f18.py
+json_recipes_collection.json
+tests.csv
+*.csv#
+.~lock.tests.csv#
+static/css/styles_index.css
+static/collections_backup
+.vscode/backingupdata_manually.py
+runnig_code.txt
+static/Documents/check_list.xlsx
+static/Documents/check_list.ods
