@@ -1,0 +1,733 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+body {
+  background-color: #fafafa;
+  font-family: "Coming Soon", cursive;
+  font-size: 1.1em;
+  font-weight: 400;
+  /* Sticky Footer */
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+/* Sticky Footer */
+
+main {
+  flex: 1 0 auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Fredericka the Great", cursive;
+  font-weight: 300;
+}
+
+h5 {
+  margin-bottom: 30px;
+}
+
+/* register.html & login.html */
+
+.bg-image-login {
+  background-image: url("../img/bkg.png") !important;
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-side-login {
+  background-color: #ffffff;
+}
+
+@media only screen and (max-width: 600px) {
+  .login-heading {
+    margin-top: 35px;
+  }
+}
+
+.form-label-group > input,
+.form-label-group > label {
+  height: 2.5em;
+  padding-left: 1em;
+  padding-top: 0.4em;
+}
+
+.fixed-top {
+  padding: 0px;
+}
+
+.navbar-brand {
+  height: 60px;
+  position: relative;
+}
+
+.btn-block {
+  width: 62%;
+  margin: auto;
+  color: #fff;
+  background-color: #ff9907;
+  border-color: #ff9907;
+}
+
+.btn-block:hover,
+.btn-block:active {
+  background-color: #e68f16;
+  border-color: #e68f16;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #e68f16;
+  border-color: #e68f16;
+}
+
+.form-control:focus,
+.btn-primary.focus,
+.btn-primary:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+  border-color: #ff9907;
+  box-shadow: 0 0 0 0.2rem rgba(255, 204, 65, 0.603);
+}
+
+.btn-login {
+  white-space: nowrap;
+}
+
+.login-register {
+  margin-top: 20px;
+  font-size: 0.7em;
+}
+
+.error_message {
+  margin-top: 20px;
+  color: red;
+  background-color: #ffbf0029;
+  padding: 10px;
+  font-size: 0.8em;
+  font-weight: bolder;
+  text-align: center;
+}
+
+/* rest of the pages */
+
+.container {
+  margin-top: 40px;
+}
+
+.container .row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.row .col {
+  padding: 0px;
+}
+
+nav {
+  background-color: #a9a9a9;
+}
+
+nav img {
+  position: relative;
+  top: 15px;
+  left: 30px;
+  transform: rotate(-3deg);
+}
+
+@media only screen and (min-width: 601px) {
+  nav {
+    height: 60px;
+    line-height: 60px;
+  }
+}
+
+nav .brand-logo {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media only screen and (max-width: 600px) {
+  nav img {
+    width: 150px;
+    top: 20px;
+  }
+}
+
+nav i,
+nav i.material-icons {
+  font-size: 30px;
+}
+
+nav ul a:hover {
+  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  color: #ffbf00;
+}
+
+/* footer */
+
+footer .container {
+  width: 90%;
+  margin-top: 0px;
+}
+
+.social-item {
+  display: inline-block;
+}
+
+.bg-social-icon {
+  display: block;
+  position: relative;
+  border-radius: 25px;
+  width: 40px;
+  height: 40px;
+  margin-left: 5px;
+  background-color: #ffffff4d;
+  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+}
+
+.bg-social-icon:hover {
+  background-color: #ffffff67;
+}
+
+.bg-social-icon i {
+  font-size: 25px;
+  position: absolute;
+  line-height: 40px;
+  left: 9px;
+  color: #fff;
+}
+
+.bg-social-icon .fa-facebook {
+  left: 10px;
+}
+
+.page-footer {
+  padding: 0px;
+  background-color: #646262;
+}
+
+footer p {
+  font-size: 0.9em;
+  padding-top: 10px;
+  margin-bottom: 0px;
+}
+
+footer ul {
+  padding-top: 15px;
+}
+
+footer .row {
+  margin: 0px;
+}
+
+hr {
+  margin-top: 20px;
+  background-color: #ffbf00;
+  height: 0.4px;
+  width: 100%;
+}
+
+/* get recipies */
+
+.get-recipes h4 {
+  font-size: 2em;
+}
+
+/* search section */
+
+.search {
+  margin-top: 35px;
+}
+
+#text_to_find {
+  background-color: white;
+  border: 1px solid #ffbf00;
+  border-radius: 25px;
+  width: 90%;
+  margin-right: 20px;
+  padding-left: 20px;
+  box-shadow: 0 1px 0 0 #ffbf00;
+}
+
+.search button {
+  background-color: transparent;
+}
+
+.search i {
+  margin-top: 10px;
+  font-size: 2em;
+  color: #ffbf00;
+}
+
+/*I use max-width, max-height and overflow to display properly the recipe name in case it is too long*/
+
+.get-recipes h5 {
+  font-size: 1.8em;
+  max-width: 400px;
+  max-height: 40px;
+  overflow-y: auto;
+  padding-bottom: 5px;
+}
+
+.get-recipes h6 {
+  font-size: 1.2em;
+}
+
+.get-recipes p {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.views {
+  color: grey;
+}
+
+.get-recipes p strong {
+  font-weight: 800;
+}
+
+/* username highligted */
+
+.highlight {
+  color: #ffbf00;
+  font-weight: 600;
+}
+
+/* carousel section */
+
+.carousel .carousel-item {
+  width: auto;
+  height: 300px;
+}
+
+.carousel {
+  height: 600px;
+  margin-top: -130px;
+}
+
+.img-carousel {
+  width: 200px;
+  box-shadow: 2px 2px 12px #3f1e09;
+}
+
+.carousel .recipe-name,
+.carousel .bottom-carousel {
+  visibility: hidden;
+}
+
+/* Display votes, views and "view" link only for the active image in the carousel */
+
+.carousel .active .recipe-name,
+.carousel .active .bottom-carousel {
+  visibility: visible;
+}
+
+/* size image for screens wider than 600px */
+
+@media only screen and (min-width: 601px) {
+  .img-carousel {
+    width: 400px;
+  }
+}
+
+/* carousel for screens under 601px */
+
+@media only screen and (max-width: 600px) {
+  .carousel {
+    height: 400px;
+    margin-top: -40px;
+    margin-bottom: -40px;
+  }
+  .search {
+    margin-top: 50px;
+  }
+  .get-recipes h5 {
+    max-width: 200px;
+  }
+}
+
+/* get_recipes & view_recipe */
+
+.wrapper-filter,
+.instructions {
+  background-color: #ffffff;
+  padding: 20px 30px 20px 30px;
+  box-shadow: 2px 2px 5px #777777;
+  margin-bottom: 25px;
+}
+
+/* get_recipes filter section */
+
+.wrapper-filter p {
+  font-size: 0.8em;
+  margin-bottom: 20px;
+}
+
+/* display checkboxes on three columns  */
+
+.checkbox {
+  margin-bottom: 15px;
+  display: inline-block;
+  width: 33%;
+  float: left;
+}
+
+.filter-section {
+  padding: 0px;
+}
+
+.switch {
+  margin-left: -15px;
+  margin-top: 30px;
+}
+
+[type="checkbox"] + label {
+  font-size: 0.9rem;
+}
+
+/* checkboxes in screens under 401px */
+
+@media only screen and (max-width: 400px) {
+  [type="checkbox"] + label {
+    font-size: 0.8rem;
+    padding-left: 22px;
+  }
+}
+
+.filters-left {
+  margin-bottom: 80px;
+}
+
+.wrapper-filter button {
+  margin-top: 25px;
+}
+
+/* update color for the switch */
+
+.switch label input[type="checkbox"]:checked + .lever {
+  background-color: #ffbf007d;
+}
+
+.switch label input[type="checkbox"]:checked + .lever:after {
+  background-color: #ffbf00;
+}
+
+/* update color for the checkboxes ticks */
+
+[type="checkbox"]:checked + label:before {
+  border-right: 2px solid #ffbf00;
+  border-bottom: 2px solid #ffbf00;
+}
+
+/* by default the select item from materialize is hidden so the validation message didn't appear. 
+After changing display to block the validation messages appeared*/
+
+.input-field select {
+  display: block;
+  position: absolute;
+  width: 0;
+  pointer-events: none;
+  height: 0;
+  top: 0;
+  left: 0;
+  opacity: 0; 
+}
+
+/* add recipe */
+
+.ingredients-instructions p {
+  color: #ff7b00;
+  font-weight: 800;
+  font-size: 0.8em;
+}
+
+.img-details {
+  margin-bottom: 40px;
+}
+
+.img-details img {
+  width: 100%;
+  width: 100%;
+  padding-bottom: 30px;
+  background-color: white;
+  padding: 15px;
+  box-shadow: 2px 2px 4px #777777;
+  margin-bottom: 40px;
+}
+
+.fa-star {
+  font-size: 2.5em;
+  color: #ffbf00;
+  text-shadow: 2px 2px 2px #777777;
+}
+
+.button-like {
+  margin-top: 10px;
+}
+
+/* buttons to edit or delete recipe */
+
+.btn-view a {
+  width: 120px;
+  height: 50px;
+  margin-top: 30px;
+  margin-left: 10px;
+}
+
+.btn-view i {
+  font-size: 30px;
+  padding-top: 6px;
+}
+
+/* recipe details section */
+
+.details-item .fa {
+  margin-top: 17px;
+  padding-right: 20px;
+}
+
+.details-item h6 {
+  padding-bottom: 10px;
+}
+
+/* instructions, ingredients and allergens section */
+
+.instructions h5,
+.ingredients h5,
+.allergens h5 {
+  padding-top: 15px;
+}
+
+.ingredients ul:not(.browser-default) > li {
+  list-style-type: circle;
+  margin-left: 10px;
+}
+
+.instructions ol {
+  padding: 0px 60px 20px 60px;
+}
+
+.instructions ol li {
+  padding: 0px 15px 15px 15px;
+}
+
+.details-item {
+  margin-bottom: 20px;
+}
+
+.details-item p, .units {
+  font-size: 0.7em;
+}
+
+/* details items - screens under 401px */
+
+@media only screen and (max-width: 400px) {
+  .details-item .fa {
+    padding-right: 12px;
+    font-size: 1.4em;
+  }
+  .ingredients li,
+  .instructions ol,
+  .instructions p {
+    font-size: 0.8em;
+  }
+}
+
+/* details items - screens wider than 400px */
+
+@media only screen and (min-width: 401px) {
+  .details-item .fa {
+    padding-right: 18px;
+    font-size: 1.8em;
+  }
+  .ingredients li,
+  .instructions ol,
+  .instructions p {
+    font-size: 0.9em;
+  }
+}
+
+/* details items - screens wider than 992px */
+
+@media only screen and (min-width: 993px) {
+  .details-item p {
+    font-size: 0.9em;
+  }
+  .units{
+    font-size: 0.7em;
+  }
+  .ingredients li,
+  .instructions ol,
+  .instructions p {
+    font-size: 1em;
+  }
+  .details-item h6,
+  input[type="text"]:not(.browser-default) {
+    margin: 0px;
+  }
+}
+
+/* ingredients, votes star - screens under 601px */
+
+@media only screen and (max-width: 600px) {
+  .ingredients ul:not(.browser-default) > li {
+    list-style-type: circle;
+    margin-left: 65px;
+  }
+  .instructions ol {
+    padding: 20px 35px 20px 55px;
+  }
+  .fa-star {
+    font-size: 2em;
+  }
+}
+
+/*Ingredients and allergens section*/
+
+.ingredients {
+  margin-bottom: 30px;
+}
+
+.ingredients li {
+  margin-top: 10px;
+}
+
+/*author and date*/
+
+.author-date {
+  margin-top: 25px;
+  font-style: italic;
+}
+
+/* Recipe image in add, view and edit recipe - for screens under 993px*/
+
+@media only screen and (max-width: 992px) {
+  .img-details img {
+    width: 80%;
+  }
+  .img-wrapper {
+    text-align: center;
+  }
+}
+
+/* all modals */
+
+.modal {
+  padding: 40px;
+  text-align: left;
+}
+
+/* modal in add and edit image */
+
+.img-details .modal-close {
+  margin-left: 30px;
+}
+
+/* manage_categories.html */
+
+.manage-categories h6 {
+  font-size: 1.2em;
+}
+
+.add_category_cuisine {
+  margin-top: 70px;
+  margin-bottom: 100px;
+}
+
+.add_category_cuisine button {
+  margin-top: 25px;
+}
+
+.manage-categories table {
+  margin-bottom: 80px;
+}
+
+/* tips */
+
+.tips .material-icons {
+  font-size: 60px;
+  color: #ffbf00;
+  text-shadow: 4px 1px 2px #777777;
+  margin-top: 20px;
+}
+
+.tips {
+  margin-bottom: 80px;
+}
+
+.tips p {
+  text-align: justify;
+}
+
+.note {
+  font-size: 0.7em;
+  font-weight: 600;
+}
+
+.tips .row {
+  margin-bottom: 50px;
+}
+
+/* Statistics.html */
+
+.charts {
+  text-align: center;
+}
+
+#category,
+#difficulty,
+#totalRecipes,
+#cuisine {
+  width: 100%;
+}
+
+.summary-table {
+  font-size: 0.7em;
+  height: 400px;
+  overflow: auto;
+}
+
+.charts h6 {
+  white-space: nowrap;
+}
+
+.table-wrapper {
+  overflow: auto;
+  height: 600px;
+}
+
+.pie-charts h6 {
+  margin-bottom: 25px;
+}
+
+.dc-chart g.row text {
+  fill: #000000;
+  font-weight: 900;
+}
+
+div.dc-chart {
+  float: none;
+}
+
+.dc-table-row td,
+.dc-table-row th {
+  padding: 15px 10px;
+}
