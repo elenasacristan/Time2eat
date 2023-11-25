@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- search box -->
+<div class="container-fluid">
+    <div class="row search">
+        <div class="title right-align">
+            <form method="POST" action="{{url_for('search')}}">
+                <div class=" row">
+                    <div class="col offset-s1 s10 offset-m6 m5 offset-l7 l4">
+                        <input class="input_search" id="text_to_find" name="text_to_find" type="search" required>
+                    </div>
+                    <button class="col s1 m1 l1" type="submit" name="action">
+                        <i class="material-icons prefix col s1 m1 l1">search</i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container get-recipes">
+    <div class="row">
+        <div class="col s12 title center-align">
+            <h4>Hi <span class="highlight">{{ username }}</span>! What are we cooking today?</h4>
+            {% if recipes_count < 1 %}
+            <p class="error_message"> We haven't found any matches </p>
+            {% elif recipes_count > 1%}
+            <p> Get inspired by these <strong>{{recipes_count}}</strong> recipes</p>
+            {% else %}
+            <p> Only 1 recipe match your search</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- display carousel when the number of recipes is > 0 -->
+    {% if recipes_count > 0 %}
+    <!-- carousel from Materialize -->
+    <div class="row">
+        <div class="col s12">
+            <div class="carousel">
+                {% for recipe in recipes%}
+                <div class="carousel-item">
+                    <div class="row recipe-name">
+                        <div class="col s12 center-align">
+                            <h5> {{recipe.recipe_name}} </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <a href="{{url_for('view_recipe', recipe_id=recipe._id)}}">
+                                {% if recipe.recipe_image %}
+                                <img class="img-carousel"
+                                    src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}">
+                                {% else %}
+                                <img class=" img-carousel" src="{{url_for('static', filename='img/default.jpg')}}">
+                                {% endif %}
+                            </a>
+                        </div>
+                    </div>
+                    <div class=" row bottom-carousel">
+                        <div class=" col s6">
+                            <p><strong>Votes: {{recipe.upvotes}} - <span class="views"> {{recipe.views}}
+                                        views</span></strong></p>
+                        </div>
+                        <div class="col s6 right-align">
+                            <a href="{{url_for('view_recipe', recipe_id=recipe._id)}}">
+                                <p>View</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- filters section, form and inputs inside from Materialize-->
+    <div class="wrapper-filter">
+        <form method="POST" action="{{url_for('filter_recipes')}}">
+            <div class="row">
+                <div class="col s12">
+                    <h4>Filter the recipes</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m12 offset-l1 l3 filter-section">
+                    <div class="switch filters-left">
+                        <label>
+                            <input type="checkbox" name="only_mine" id="only_mine" value="only_mine">
+                            <span class="lever"></span>Only my recipes
+                        </label>
+                    </div>
+                    <div class="filters-left">
+                        <h5><strong>Cuisine:</strong></h5>
+                        <select id="cuisine" name="cuisine" multiple>
+                            <option value="" selected disabled>Select one</option>
+                            {% for cuisine in cuisines %}
+                            <option value="{{cuisine.cuisine}}">{{cuisine.cuisine}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="filters-left">
+                        <h5><strong>Difficulty:</strong></h5>
+                        <select id="difficulty" name="difficulty" multiple>
+                            <option value="" selected disabled>Select one</option>
+                            {% for level in difficulty %}
+                            <option value="{{level.difficulty}}">{{level.difficulty}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col s12 m12 offset-l2 l6 filter-section">
+                    <div class="row">
+                        <h5><strong>Allergens:</strong></h5>
+                        <p>Select what allergens you want to exclude from the results</p>
+                        {% for allergen in allergens %}
+                        {% if allergen.allergen != "Not specified" %}
+                        <p class="checkbox">
+                            <input type="checkbox" id="{{allergen.allergen}}" name="allergens"
+                                value="{{allergen.allergen}}" />
+                            <label for="{{allergen.allergen}}">{{allergen.allergen}}</label>
+                        </p>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <h5><strong>Meal type:</strong></h5>
+                        {% for category in categories %}
+                        {% if category.category != "Not specified" %}
+                        <p class="checkbox">
+                            <input type="checkbox" id="{{category.category}}" name="category"
+                                value="{{category.category}}" />
+                            <label for="{{category.category}}">{{category.category}}</label>
+                        </p>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 right-align">
+                    <button class="btn waves-effect waves-light blue" type="submit" name="action">
+                        <i class="fa fa-filter"></i> Apply filter
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

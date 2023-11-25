@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Font-Asome library link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"
+        type="text/css" />
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Coming+Soon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great&display=swap" rel="stylesheet">
+    <!-- materialize stylesheet -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/materialize.min.css')}}" type="text/css" />
+    <!-- dc stylesheet -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/dc.css')}}" type="text/css" />
+    <!-- my stylesheet -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}" type="text/css" />
+
+    <title>{{title}}</title>
+</head>
+
+<body>
+    <header>
+        <!-- Materialize nav bar with Mobile side bar, I have also use Materialize Tooltips -->
+        <nav>
+            <div class="nav-wrapper">
+                <a href="{{url_for('get_recipes')}}" class=" brand-logo">
+                    <img src="{{url_for('static', filename='img/logo.png')}}" width="220" alt="time2eat logo">
+                </a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse">
+                    <i class="material-icons">menu</i>
+                </a>
+                <!-- nav bar top - hidden for tablets and mobiles -->
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{{url_for('tips')}}"><i class="material-icons">help_outline</i></a></li>
+                    <li><a href="{{url_for('get_recipes')}}"><i class="material-icons">home</i></a></li>
+                    <li><a class="tooltipped" data-position="bottom" data-delay="200" data-tooltip="Dashboard"
+                            href="{{url_for('statistics')}}"><i class="material-icons">trending_up</i></a></li>
+                    <li><a class="tooltipped" data-position="bottom" data-delay="200"
+                            data-tooltip="Manage type of meal and cuisines" href="{{url_for('manage_categories')}}"><i
+                                class="material-icons">settings</i></a></li>
+                    <li><a class="tooltipped" data-position="bottom" data-delay="200"
+                            data-tooltip="Add recipe: Remember to add the type of meal / cuisine before"
+                            href="{{url_for('add_recipe')}}"><i class="material-icons">add_box</i></a></li>
+                    <li><a href="{{url_for('logout')}}"><i class="material-icons">exit_to_app</i></a></li>
+                </ul>
+                <!-- side nav bar - displayed on tablets and mobiles -->
+                <ul class="side-nav" id="mobile-demo">
+                    <li><a href="{{url_for('tips')}}">How it works</a></li>
+                    <li><a href="{{url_for('get_recipes')}}">Home</a></li>
+                    <li><a href="{{url_for('statistics')}}">Statistics</a></li>
+                    <li><a href="{{url_for('manage_categories')}}">Manage type of meals / cuisines</a></li>
+                    <li><a href="{{url_for('add_recipe')}}">Add recipie</a></li>
+                    <li><a href="{{url_for('logout')}}">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+        <!-- end of Materialize nav bar with Mobile side bar -->
+    </header>
+
+    <main>
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+    <!-- Materialize sticky footer -->
+    <footer class="page-footer">
+        <div class="footer-copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col s6">
+                        <p>email: Time2Eat@zzzz.zz</p>
+                        <p>telephone: 123 456 789</p>
+                    </div>
+                    <div class="col s6 right-align">
+                        <ul class="social-media-area">
+                            <li class="social-item">
+                                <a href="https://www.facebook.com/" target="_blank">
+                                    <span class="bg-social-icon"><i class="fa fa-facebook"
+                                            aria-hidden="true"></i></span>
+                                </a>
+                            </li>
+                            <li class="social-item">
+                                <a href="https://twitter.com" target="_blank">
+                                    <span class="bg-social-icon"><i class="fa fa-twitter" aria-hidden="true"></i></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row copyright">
+                    <div class="col s12 center-align copyright">
+                        <hr>
+                        <p>© 2019 Time2Eat</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- end of Materialize sticky footer -->
+
+    <!-- jquery file -->
+    <script src="{{url_for('static', filename='js/jqueryv3.4.5.js')}}"></script>
+    <!-- Materialize js file -->
+    <script src="{{url_for('static', filename='js/materialize.js')}}"></script>
+    <!-- d3, dc and crossfilter needed to create the interactive charts and they need to be in the following order -->
+    <script src="{{url_for('static', filename='js/d3.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/crossfilter.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/dc.min.js')}}"></script>
+    <!--library to make sure the code doesn't execute until the data is fully loaded-->
+    <script src="{{url_for('static', filename='js/queue.min.js')}}"></script>
+    <!-- my js file to create the charts -->
+    <script src="{{url_for('static', filename='js/charts.js')}}"></script>
+    <!-- my js file used to display instantly the image file selected on the add_recipe and edit_recipe pages-->
+    <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
+    <!-- scripts needed for the Materialize components -->
+    <script>
+        $(document).ready(function () {
+            $(".button-collapse").sideNav();
+            $('.carousel').carousel();
+            $('.modal').modal();
+            $('select').material_select();
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<!-- form coming from template https://startbootstrap.com/snippets/sign-in-split/ and then modified-->
+<form method="POST" action="{{url_for('register')}}">
+    <div class="form-label-group">
+        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+        <label for="username">Username</label>
+    </div>
+    <div class="form-label-group">
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+        <label for="password">Password</label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block btn-login font-weight-bold mb-2" type="submit">Register</button>
+</form>
+
+<p class="login-register text-center">If you already have an account <a href="{{url_for('index')}}"><strong>Login here</strong></a></p>
+
+<!-- if the user name is already in use we will display an error message below -->
+{% with messages = get_flashed_messages() %} 
+    {% if messages %}
+        {% for message in messages %}
+            <p class="error_message">{{ message }}</p>
+        {% endfor %}
+    {% endif %} 
+{% endwith %}
+
+{% endblock %}

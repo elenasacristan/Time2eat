@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <!-- recipe name -->
+    <div class="row">
+        <div class="col s12 m9">
+            <h4>{{recipe.recipe_name}}</h4>
+        </div>
+        <div class="col offset-s6 s6 m3 right-align">
+            <!-- if the same recipe is votes twice we will display an error message below using a flash message-->      
+            {% with messages = get_flashed_messages() %} 
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="error_message">{{ message }}</p>
+                    {% endfor %}
+                {% endif %} 
+            {% endwith %}
+            <div class="row">
+                <div class="col s12 right-align">
+                    <div class="votes">
+                        <h5>{{recipe.upvotes}} votes <i class="fa fa-star"></i></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row img-details">
+        <!-- recipe image -->
+        <div class="col s12 m12 l6 img-wrapper">
+            {% if recipe.recipe_image %}
+                <img src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}" alt="recipe_image">
+            {% else %}
+                <img src="{{url_for('static', filename='img/default.jpg')}}" alt="default_recipe_image">
+            {% endif %}
+        </div>
+
+        <!-- recipe details -->
+        <div class="col s11 m12 l6">
+            <div class="row">
+                <div class="col s6">
+                    <div class="row details-item">
+                        <div class="col s6 right-align">
+                            <i class="fa fa-clock-o"></i>
+                        </div>
+                        <div class="col s6 ">
+                            <h6><strong>Cooking time <br><span class="units">(min)</span></strong></h6>
+                            <p>{{recipe.cooking_time}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class=" col s6">
+                    <div class="row details-item">
+                        <div class="col s6 right-align">
+                            <i class="fa fa-heart"></i>
+                        </div>
+                        <div class="col s6">
+                            <h6><strong>Calories <br><span class="units">(kcal/serving)</span></strong></h6>
+                            <p>{{recipe.calories}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <div class="row details-item">
+                        <div class="col s6 right-align">
+                            <i class="fa fa-puzzle-piece"></i>
+                        </div>
+                        <div class="col s6">
+                            <h6><strong>Difficulty</strong></h6>
+                            <p>{{recipe.difficulty}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6">
+                    <div class="row details-item">
+                        <div class="col s6 right-align">
+                            <i class="fa fa-cutlery"></i>
+                        </div>
+                        <div class="col s6">
+                            <h6><strong>Category</strong></h6>
+                            <p>{{recipe.category}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <div class="row details-item">
+                        <div class="col s6 right-align">
+                            <i class="fa fa-globe"></i>
+                        </div>
+                        <div class="col s6">
+                            <h6><strong>Cuisine</strong></h6>
+                            <p>{{recipe.cuisine}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6">
+                    <div class="row details-item">
+                        <div class="col s6 right-align">
+                            <i class="fa fa-users"></i>
+                        </div>
+                        <div class="col s6">
+                            <h6><strong>Serves</strong></h6>
+                            <p>{{recipe.serves}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12 m3">
+            <div class="row">
+                <!-- ingredient -->
+                <div class="col s12 ingredients">
+                    <h5>Ingredients</h5>
+                    <ul>
+                        {% for ingredient in recipe.ingredients %}
+                            <li>
+                                {{ingredient}}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- allergens -->
+                <!-- if length of the allergens array is > 0 then display the allergens -->
+                {% if recipe.allergens is defined and recipe.allergens|length >0 %}
+                    <div class="col s12 ingredients">
+                        <h5>Allergens</h5>
+                        <ul>
+                            {% for allergen in recipe.allergens %}
+                            <li>
+                                {{allergen}}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+        <div class="col s12 offset-m1 m8 instructions">
+            <div class="row">
+                <!-- instructions -->
+                <div class="col s12">
+                    <h5 class="center-align">Cooking instructions</h5>
+                    <ol>
+                        {% for instruction in recipe.instructions %}
+                            <li>
+                                {{instruction}}
+                            </li>
+                        {% endfor %}
+                    </ol>
+                    <p class="center-align author-date">Recipe by <b><em>{{recipe.author}}</em></b> - {{recipe.date}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if recipe.author == username %}
+    <div class="row">
+        <div class="col s12 right-align btn-view">
+            <a href="#modal_delete_recipe" class="btn waves-effect waves-light red modal-trigger">
+                <i class="fa fa-trash"></i>
+            </a>
+            <a href="{{url_for('edit_recipe', recipe_id=recipe._id)}}" class="btn waves-effect waves-light blue">
+                <i class="fa fa-edit"></i>
+            </a>
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col s12 right-align btn-view">
+            <a href="{{url_for('vote', recipe_id=recipe._id)}}" class="btn waves-effect waves-light">
+                <i class="fa fa-thumbs-up"></i>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+<!-- Modal Structure -->
+<div id="modal_delete_recipe" class="modal">
+    <div class="modal-content">
+        <p>Are you sure you want to remove the recipe?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="modal-action modal-close waves-effect waves-green btn">No</a>
+        <a href="{{url_for('delete_recipe', recipe_id=recipe._id)}}"
+            class="modal-action modal-close waves-effect waves-green btn">Yes</a>
+    </div>
+</div>
+
+
+{% endblock %}

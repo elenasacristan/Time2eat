@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container charts">
+
+    <div class="row">
+        <div class="col s12 right-align">
+            <!-- button to reset the charts -->
+            <button class="btn" onclick="window.location.href = 'javascript:dc.filterAll(); dc.renderAll();';">Reset
+                All</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <!-- number display -->
+            <p>The total number of recipes is: <span id="totalRecipes"></span></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12 m4 l2">
+            <div class="row">
+                <div class="col s12">
+                    <!-- row chart - ranking authors -->
+                    <h6>Top 10 rated authors</h6>
+                    <div id="author"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 offset-m1 m7 offset-l2 l8 pie-charts">
+            <div class="row">
+                <!-- pie chart difficulty -->
+                <div class="col s12 offset-l1 l5">
+                    <h6>Recipes by difficulty</h6>
+                    <div id="difficulty"></div>
+                </div>
+                <!-- pie chart type of meal -->
+                <div class="col s12 offset-l1 l5">
+                    <h6>Recipes by Type of meal</h6>
+                    <div id="category"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- row chart cuisines -->
+        <div class="col s12 m4 l2">
+            <div class="row">
+                <div class="col s12">
+                    <h6>Recipes by Cuisine</h6>
+                    <div id="cuisine"></div>
+                </div>
+            </div>
+        </div>
+        <!-- summary table -->
+        <div class="col s12 offset-m1 m7 offset-l2 l8 table-wrapper">
+            <table class="striped centered summary-table " id="table">
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
