@@ -1,5 +1,6 @@
 import os
 import io
+from bson.binary import Binary
 '''
 env is where I have my environmental variables and it is only used to run my code locally, in production is 
 commented out
@@ -231,7 +232,7 @@ def insert_recipe():
                 'cuisine':request.form['cuisine'],
                 'allergens':request.form.getlist('allergens'),
                 'ingredients':string_to_array(request.form['ingredients']),
-                'recipe_image': Binary(image_data),
+                'recipe_image': Binary(image_file.read()),
                 'author':session['username'],
                 'upvotes':0,
                 'date':datetime.now().strftime("%d/%m/%Y"),
