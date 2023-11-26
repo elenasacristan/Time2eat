@@ -115,17 +115,19 @@ def search():
 
     #Search result sorted by upvotes descending and after by number of views descending    
     recipes = mongo.db.Recipes.find({"$text":{"$search": text_to_find}}).sort([("upvotes",DESCENDING),("views",DESCENDING)])
-            
+    
+    recipes_list = list(recipes)
+	
     # send recipes to page
     return render_template('get_recipes.html',
                             title="View recipes", 
                             username=session['username'], 
-                            recipes = recipes, 
+                            recipes = recipes_list, 
                             categories = mongo.db.Categories.find(), 
                             cuisines=mongo.db.Cuisines.find(), 
                             difficulty=mongo.db.Difficulty.find(), 
                             allergens=mongo.db.Allergens.find(), 
-                            recipes_count=len(list(recipes))) 
+                            recipes_count=len(recipes_list)) 
          
 
 '''
@@ -170,17 +172,17 @@ def filter_recipes():
                                     query_cuisine,
                                     query_allergens, 
                                     query_categories]}).sort([("upvotes",DESCENDING), ("views",DESCENDING)])
-    recipes_count = len(list(recipes))
+    recipes_list = list(recipes)
 
     return render_template('get_recipes.html', 
                             title="View recipes", 
                             username=session['username'], 
-                            recipes = recipes, 
+                            recipes = recipes_list, 
                             categories = mongo.db.Categories.find(), 
                             cuisines=mongo.db.Cuisines.find(), 
                             difficulty=mongo.db.Difficulty.find(), 
                             allergens=mongo.db.Allergens.find(), 
-                            recipes_count=recipes_count)
+                            recipes_count=len(recipes_list))
    
 
 #route to the tips page
