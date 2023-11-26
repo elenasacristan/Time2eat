@@ -1,4 +1,5 @@
 import os
+import io
 '''
 env is where I have my environmental variables and it is only used to run my code locally, in production is 
 commented out
@@ -344,20 +345,29 @@ def update_recipe(recipe_id):
     
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
-
-@app.route('/img_uploads/<filename>')
+@app.route('/img_uploads/<path:filename>')
 def img_uploads(filename):
-    # Get the recipe document with the specified image filename
-    recipe = mongo.db.Recipes.find_one({"recipe_image": filename})
-
-    # If the recipe document is found, return the image data
-    if recipe:
-        image_data = recipe['recipe_image']
-        return send_file(BytesIO(image_data), mimetype='image/jpeg')
-
-    # If the recipe document is not found, return a 404 error
+    image_data = mongo.db.Recipes.find_one({"recipe_image": filename})["recipe_image"]
+    if image_data:
+        file_object = io.BytesIO(image_data)
+        file_object.seek(0)
+        return send_file(file_object, mimetype='image/jpeg')
     else:
         return abort(404)
+	    
+# @app.route('/img_uploads/<filename>')
+# def img_uploads(filename):
+#     # Get the recipe document with the specified image filename
+#     recipe = mongo.db.Recipes.find_one({"recipe_image": filename})
+
+#     # If the recipe document is found, return the image data
+#     if recipe:
+#         image_data = recipe['recipe_image']
+#         return send_file(BytesIO(image_data), mimetype='image/jpeg')
+
+#     # If the recipe document is not found, return a 404 error
+#     else:
+#         return abort(404)
 	
     # return mongo.send_file(filename)
 
