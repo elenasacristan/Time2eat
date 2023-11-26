@@ -212,9 +212,9 @@ def insert_recipe():
     if 'recipe_image' in request.files:
         recipe_image = request.files['recipe_image']
         if recipe_image != "":
-	    # Read the image file contents
-            image_data = recipe_image.stream.read()
-            mongo.save_file(recipe_image.filename, image_data)
+	    # Convert binary data into a file-like object
+            image_file = io.BytesIO(recipe_image.stream.read())
+            mongo.save_file(recipe_image.filename, image_file)
         
         if request.form['calories']:
             calories = request.form['calories']
