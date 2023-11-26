@@ -211,7 +211,9 @@ def insert_recipe():
     if 'recipe_image' in request.files:
         recipe_image = request.files['recipe_image']
         if recipe_image != "":
-            mongo.save_file(recipe_image.filename, recipe_image)
+	    # Read the image file contents
+            image_data = recipe_image.stream.read()
+            mongo.save_file(recipe_image.filename, image_data)
         
         if request.form['calories']:
             calories = request.form['calories']
@@ -228,7 +230,7 @@ def insert_recipe():
                 'cuisine':request.form['cuisine'],
                 'allergens':request.form.getlist('allergens'),
                 'ingredients':string_to_array(request.form['ingredients']),
-                'recipe_image':recipe_image.filename,
+                'recipe_image': Binary(image_data),
                 'author':session['username'],
                 'upvotes':0,
                 'date':datetime.now().strftime("%d/%m/%Y"),
