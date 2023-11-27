@@ -224,22 +224,26 @@ def insert_recipe():
         else:
             calories = "Not specified"
 
-        mongo.db.Recipes.insert_one({
-                'recipe_name':request.form['recipe_name'].capitalize(),
-                'instructions':string_to_array(request.form['instructions']),
-                'serves':request.form['serves'],
-                'calories':calories,
-                'difficulty':request.form['difficulty'],
-                'cooking_time':request.form['cooking_time'],
-                'cuisine':request.form['cuisine'],
-                'allergens':request.form.getlist('allergens'),
-                'ingredients':string_to_array(request.form['ingredients']),
-                'recipe_image': recipe_image.filename,
-                'author':session['username'],
-                'upvotes':0,
-                'date':datetime.now().strftime("%d/%m/%Y"),
-                'category':request.form['category']
-            })
+        recipe_data = {
+            'recipe_name': request.form['recipe_name'].capitalize(),
+            'instructions': string_to_array(request.form['instructions']),
+            'serves': request.form['serves'],
+            'calories': calories,
+            'difficulty': request.form['difficulty'],
+            'cooking_time': request.form['cooking_time'],
+            'cuisine': request.form['cuisine'],
+            'allergens': request.form.getlist('allergens'),
+            'ingredients': string_to_array(request.form['ingredients']),
+            'recipe_image': recipe_image.filename,
+            'author': session['username'],
+            'upvotes': 0,
+            'date': datetime.now().strftime("%d/%m/%Y"),
+            'category': request.form['category']
+        }
+
+        # Insert the recipe data into the database
+        mongo.db.Recipes.insert_one(recipe_data)
+     
         if md5_hash:
             mongo.db.Recipes.update_one({'_id': recipe_data['_id']}, {'$set': {'md5': md5_hash}})
     return redirect(url_for('get_recipes'))
