@@ -214,7 +214,6 @@ def insert_recipe():
         recipe_image = request.files['recipe_image']
         if recipe_image != "":
             mongo.save_file(recipe_image.filename, recipe_image)
-        
         if request.form['calories']:
             calories = request.form['calories']
         else:
@@ -297,8 +296,7 @@ def update_recipe(recipe_id):
     recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
     if 'recipe_image' in request.files:
         recipe_image = request.files['recipe_image']
-        mongo.save_file(recipe_image.filename, recipe_image)
-	                
+        mongo.save_file(recipe_image.filename, recipe_image)                
         if request.form['calories']:
             calories = request.form['calories']
         else:
@@ -315,10 +313,9 @@ def update_recipe(recipe_id):
                     'allergens':request.form.getlist('allergens'),
                     'ingredients':string_to_array(request.form['ingredients']),
                     'category':request.form['category']
-                }})
-	    
+                }})    
         if recipe_image.filename != "":
-	    recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set":{'recipe_image':recipe_image.filename,}})  
+            recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set":{'recipe_image':recipe_image.filename,}})  
     
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
