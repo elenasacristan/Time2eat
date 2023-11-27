@@ -213,9 +213,7 @@ def insert_recipe():
     if 'recipe_image' in request.files:
         recipe_image = request.files['recipe_image']
         if recipe_image != "":
-	    # Convert binary data into a file-like object
-            image_file = io.BytesIO(recipe_image.stream.read())
-            mongo.save_file(recipe_image.filename, image_file)
+            mongo.save_file(recipe_image.filename, recipe_image)
         
         if request.form['calories']:
             calories = request.form['calories']
@@ -232,7 +230,7 @@ def insert_recipe():
                 'cuisine':request.form['cuisine'],
                 'allergens':request.form.getlist('allergens'),
                 'ingredients':string_to_array(request.form['ingredients']),
-                'recipe_image': Binary(image_file.read()),
+                'recipe_image': recipe_image.filename,
                 'author':session['username'],
                 'upvotes':0,
                 'date':datetime.now().strftime("%d/%m/%Y"),
@@ -299,10 +297,8 @@ def update_recipe(recipe_id):
     recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
     if 'recipe_image' in request.files:
         recipe_image = request.files['recipe_image']
-        image_data = recipe_image.read()
-	    
         mongo.save_file(recipe_image.filename, recipe_image)
-            
+	                
         if request.form['calories']:
             calories = request.form['calories']
         else:
@@ -318,59 +314,17 @@ def update_recipe(recipe_id):
                     'cuisine':request.form['cuisine'],
                     'allergens':request.form.getlist('allergens'),
                     'ingredients':string_to_array(request.form['ingredients']),
-                    'category':request.form['category'],
-		    'recipe_image': image_data
+                    'category':request.form['category']
                 }})
-    else:
-        if request.form['calories']:
-            calories = request.form['calories']
-        else:
-            calories = "Not specified"
-	
-        recipes.update_one({"_id": ObjectId(recipe_id)}, {
-            "$set": {
-                'recipe_name': request.form['recipe_name'].capitalize(),
-                'instructions': string_to_array(request.form['instructions']),
-                'serves': request.form['serves'],
-                'calories': calories,
-                'difficulty': request.form['difficulty'],
-                'cooking_time': request.form['cooking_time'],
-                'cuisine': request.form['cuisine'],
-                'allergens': request.form.getlist('allergens'),
-                'ingredients': string_to_array(request.form['ingredients']),
-                'category': request.form['category']
-            }
-        })
-            # if recipe_image.filename != "":   
-            #     recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set":{'recipe_image':recipe_image.filename,}})       
+	    
+        if recipe_image.filename != "":
+	    recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set":{'recipe_image':recipe_image.filename,}})  
     
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
 @app.route('/img_uploads/<path:filename>')
 def img_uploads(filename):
-    image_data = mongo.db.Recipes.find_one({"recipe_image": filename})["recipe_image"]
-    if image_data:
-        file_object = io.BytesIO(image_data)
-        file_object.seek(0)
-        return send_file(file_object, mimetype='image/jpeg')
-    else:
-        return abort(404)
-	    
-# @app.route('/img_uploads/<filename>')
-# def img_uploads(filename):
-#     # Get the recipe document with the specified image filename
-#     recipe = mongo.db.Recipes.find_one({"recipe_image": filename})
-
-#     # If the recipe document is found, return the image data
-#     if recipe:
-#         image_data = recipe['recipe_image']
-#         return send_file(BytesIO(image_data), mimetype='image/jpeg')
-
-#     # If the recipe document is not found, return a 404 error
-#     else:
-#         return abort(404)
-	
-    # return mongo.send_file(filename)
+    return mongo.send_file(filename)
 
 
 # function to remove a recipe (only the author can remove a recipe)
