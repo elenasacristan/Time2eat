@@ -216,6 +216,9 @@ def insert_recipe():
         recipe_image = request.files['recipe_image']
         if recipe_image != "":
             mongo.save_file(recipe_image.filename, recipe_image)
+            # Generate MD5 hash for the uploaded image
+            md5_hash = md5(recipe_image.read()).hexdigest()
+	    
         if request.form['calories']:
             calories = request.form['calories']
         else:
@@ -237,6 +240,8 @@ def insert_recipe():
                 'date':datetime.now().strftime("%d/%m/%Y"),
                 'category':request.form['category']
             })
+        if md5_hash:
+            mongo.db.Recipes.update_one({'_id': recipe_data['_id']}, {'$set': {'md5': md5_hash}})
     return redirect(url_for('get_recipes'))
 
 
@@ -299,6 +304,9 @@ def update_recipe(recipe_id):
     if 'recipe_image' in request.files:
         recipe_image = request.files['recipe_image']
         mongo.save_file(recipe_image.filename, recipe_image) 
+        # Generate MD5 hash for the uploaded image
+        md5_hash = md5(recipe_image.read()).hexdigest()
+        recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set":{'md5':md5_hash}})
 
         if request.form['calories']:
             calories = request.form['calories']
