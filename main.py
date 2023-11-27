@@ -1,6 +1,8 @@
 import os
 import io
 from bson.binary import Binary
+from hashlib import md5
+
 '''
 env is where I have my environmental variables and it is only used to run my code locally, in production is 
 commented out
@@ -296,7 +298,12 @@ def update_recipe(recipe_id):
     recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
     if 'recipe_image' in request.files:
         recipe_image = request.files['recipe_image']
-        mongo.save_file(recipe_image.filename, recipe_image)                
+        mongo.save_file(recipe_image.filename, recipe_image) 
+
+        # Generate MD5 hash for the uploaded image
+        md5_hash = md5(recipe_image.read()).hexdigest()
+        recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set":{'md5':md5_hash}})
+
         if request.form['calories']:
             calories = request.form['calories']
         else:
