@@ -300,10 +300,6 @@ def update_recipe(recipe_id):
         recipe_image = request.files['recipe_image']
         mongo.save_file(recipe_image.filename, recipe_image) 
 
-        # Generate MD5 hash for the uploaded image
-        md5_hash = md5(recipe_image.read()).hexdigest()
-        recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set":{'md5':md5_hash}})
-
         if request.form['calories']:
             calories = request.form['calories']
         else:
@@ -328,8 +324,8 @@ def update_recipe(recipe_id):
 
 @app.route('/img_uploads/<path:filename>')
 def img_uploads(filename):
-    return mongo.send_file(filename)
-
+    gridfs = GridFS(db, disableETagCheck=True)
+    return gridfs.send_file(filename)
 
 # function to remove a recipe (only the author can remove a recipe)
 @app.route('/delete_recipe/<recipe_id>')
