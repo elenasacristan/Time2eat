@@ -17,6 +17,7 @@ from bson.json_util import dumps
 from datetime import datetime
 import bcrypt
 from flask import send_file
+from pymongo import gridfs
 
 # create an instance of Flask
 app = Flask(__name__)
