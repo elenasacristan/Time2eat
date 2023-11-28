@@ -33,6 +33,9 @@ app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')
 # we create an instance of Mongo
 mongo = PyMongo(app)
 
+# Initialize GridFS object
+fs = gridfs.GridFS(mongo.db)
+
 # secret key needed to create session cookies
 app.secret_key = os.environ.get('SECRET_KEY')
 
@@ -217,7 +220,11 @@ def insert_recipe():
     if 'recipe_image' in request.files:
         recipe_image = request.files['recipe_image']
         if recipe_image != "":
-            mongo.save_file(recipe_image.filename, recipe_image)
+            # Save the image data to GridFS
+            image_data = recipe_image.read()
+            filename = recipe_image.filename
+            fs.put(image_data, filename=filename)
+		
             # Generate MD5 hash for the uploaded image
             md5_hash = md5(recipe_image.read()).hexdigest()
 	    
@@ -236,7 +243,7 @@ def insert_recipe():
             'cuisine': request.form['cuisine'],
             'allergens': request.form.getlist('allergens'),
             'ingredients': string_to_array(request.form['ingredients']),
-            'recipe_image': recipe_image.filename,
+            'recipe_image': filename,
             'author': session['username'],
             'upvotes': 0,
             'date': datetime.now().strftime("%d/%m/%Y"),
@@ -338,8 +345,8 @@ def update_recipe(recipe_id):
 
 @app.route('/img_uploads/<path:filename>')
 def img_uploads(filename):
-    gridfs = GridFS(db, disableETagCheck=True)
-    return gridfs.send_file(filename)
+    image_data = fs.get_last_version(filename=filename).read()
+    return send_file(io.BytesIO(image_data), mimetype='image/jpeg')
 
 # function to remove a recipe (only the author can remove a recipe)
 @app.route('/delete_recipe/<recipe_id>')
