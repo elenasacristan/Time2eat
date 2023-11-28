@@ -316,7 +316,10 @@ def update_recipe(recipe_id):
     recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
     if 'recipe_image' in request.files:
         recipe_image = request.files['recipe_image']
-        mongo.save_file(recipe_image.filename, recipe_image) 
+        # Save the image data to GridFS
+        image_data = recipe_image.read()
+        filename = recipe_image.filename
+        fs.put(image_data, filename=filename)
         # Generate MD5 hash for the uploaded image
         md5_hash = md5(recipe_image.read()).hexdigest()
         recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set":{'md5':md5_hash}})
@@ -339,7 +342,7 @@ def update_recipe(recipe_id):
                     'category':request.form['category']
                 }})    
         if recipe_image.filename != "":
-            recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set":{'recipe_image':recipe_image.filename,}})  
+            recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set":{'recipe_image':filename,}})  
     
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
